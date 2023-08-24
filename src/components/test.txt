@@ -1,0 +1,22 @@
+population:4314768
+region:"Americas"
+startOfWeek:"monday"
+status:"officially-assigned"
+subregion:"Central America"
+name:{
+    common:"Panama"
+official:"Republic of Panama"
+}
+capital
+TableBody,
+
+ <TableBody>
+          {data.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              {/* ... other cells */}
+            </TableRow>
+          ))}
+        </TableBody>

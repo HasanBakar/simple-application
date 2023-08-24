@@ -1,21 +1,34 @@
 import React from 'react';
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid, Paper, TextField, Button} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import {useState} from "react";
+import { paperStyle, formStyle } from "../helper/styles.ts";
+import {defaultUser} from './../helper/defaultUser';
+import { userInterface } from "../models/userInterface.ts";
 
-export default function UserInfo() {
-    const paperStyle = {
-        padding:20,
-        height: "55vh",
-        width: "30vw",
-        margin: "14vh auto"
-    }
-    const formStyle = {
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px 0"
+
+
+const UserInfo:React.FC  = () =>{
+
+  const navigate = useNavigate();
+  const preUsers = JSON.parse(localStorage.getItem("users"));
+  
+  const [user, setUser] = useState<userInterface>(defaultUser);
+ 
+
+   const handleSubmit = (e): void => {
+     e.preventDefault();
+     localStorage.setItem("users", JSON.stringify([...preUsers, user]));
+     navigate("/secondPage");
+   };
+  
+
+    const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      
+      setUser({...user, [e.target.name]:e.target.value})
     };
-    const handleSubmit = ()=>{
-        console.log("include future")
-    }
+    
+
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
@@ -27,6 +40,7 @@ export default function UserInfo() {
             name="name"
             label="Name"
             fullWidth
+            onChange={(e) => onValueChange(e)}
             placeholder="Your name here"
             required
           ></TextField>
@@ -34,6 +48,7 @@ export default function UserInfo() {
             label="Phone Number"
             name="phoneNumber"
             fullWidth
+            onChange={(e) => onValueChange(e)}
             placeholder="Your phone number here"
             required
           ></TextField>
@@ -42,14 +57,23 @@ export default function UserInfo() {
             type="email"
             name="email"
             fullWidth
+            onChange={(e) => onValueChange(e)}
             placeholder="Your email here"
             required
           ></TextField>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Register
+          <Button
+            onSubmit={()=>handleSubmit(e)}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+           Take Access
           </Button>
         </form>
       </Paper>
     </Grid>
   );
 }
+
+export default UserInfo;

@@ -5,14 +5,38 @@ import './index.css'
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import "@mui/material/styles";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UserInfo from './components/UserInfo';
+import SecondPage from './components/SecondPage';
+import ErrorPage from './components/ErrorPage';
 
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <UserInfo></UserInfo>,
+  },
+  {
+    path: "/secondPage",
+    element: <SecondPage></SecondPage>,
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>,
+  },
+]);
+
+
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <RouterProvider router={router}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-  </React.StrictMode>,
-)
+    </RouterProvider>
+  </React.StrictMode>
+);
 
 
